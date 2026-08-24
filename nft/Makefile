@@ -49,3 +49,8 @@ deploy-sepolia:
 mintNft:
 	@forge script script/Interactions.s.sol:MintBasicNft $(NETWORK_ARGS)
 
+deployMoodNft:
+	@forge script script/DeployMoodNft.s.sol:DeployMoodNft $(NETWORK_ARGS)
+
+mintMoodNft:
+	@forge script script/Interactions.s.sol:MintMoodNft $(NETWORK_ARGS)
