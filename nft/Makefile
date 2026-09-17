@@ -1,6 +1,6 @@
 -include .env
 
-.PHONY: all clean deploy deploy-sepolia help install format anvil build mintTokens
+.PHONY: all clean deploy help install format anvil build
 
 DEFAULT_ANVIL_KEY := 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 
@@ -11,8 +11,9 @@ help:
 	@echo "  make format              - Format code"
 	@echo "  make anvil               - Start local Anvil chain"
 	@echo "  make deploy              - Deploy to local Anvil"
-	@echo "  make deploy-sepolia      - Deploy to Sepolia testnet"
-	@echo "  make createSubscription  - Create VRF subscription"
+	@echo "  make mintNft             - Mint BasicNft"
+	@echo "  make deployMoodNft       - Deploy MoodNft to local Anvil"
+	@echo "  make mintMoodNft         - Mint MoodNft"
 
 
 all: clean install build
@@ -43,9 +44,6 @@ endif
 deploy:
 	@forge script script/DeployBasicNft.s.sol:DeployBasicNft $(NETWORK_ARGS)
 
-deploy-sepolia:
-	@forge script script/DeployBasicNft.s.sol:DeployBasicNft --rpc-url $(SEPOLIA_RPC_URL) --account $(ACCOUNT) --sender $(ADDRESS) --broadcast $(VERIFY_ARGS) -vvvv
-
 mintNft:
 	@forge script script/Interactions.s.sol:MintBasicNft $(NETWORK_ARGS)
 
@@ -54,3 +52,7 @@ deployMoodNft:
 
 mintMoodNft:
 	@forge script script/Interactions.s.sol:MintMoodNft $(NETWORK_ARGS)
+
+mintMoodNft:
+	cast send 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 "mint()" --account defaultKey
+
